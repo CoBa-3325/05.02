@@ -1,0 +1,193 @@
+<Window x:Class="TourAgency.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Туристические агентства" Height="640" Width="1000"
+        WindowStartupLocation="CenterScreen" FontSize="13">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="#E1E6EC" BorderThickness="0,0,0,1" Padding="12,8">
+            <DockPanel>
+                <Button Content="Выйти" DockPanel.Dock="Right" Click="Logout_Click" Padding="18,5" />
+                <TextBlock x:Name="txtUser" VerticalAlignment="Center" FontWeight="SemiBold" />
+            </DockPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" x:Name="tabs" Margin="8">
+
+        <TabItem x:Name="tabTours" Header="Туры">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <WrapPanel Margin="0,0,0,8">
+                    <TextBlock Text="Страна:" VerticalAlignment="Center" />
+                    <ComboBox x:Name="cmbCountry" Width="140" Margin="6,0,14,0" />
+
+                    <TextBlock Text="Дата с:" VerticalAlignment="Center" />
+                    <DatePicker x:Name="dpFrom" Width="120" Margin="6,0,14,0" />
+
+                    <TextBlock Text="по:" VerticalAlignment="Center" />
+                    <DatePicker x:Name="dpTo" Width="120" Margin="6,0,14,0" />
+
+                    <TextBlock Text="Цена до:" VerticalAlignment="Center" />
+                    <TextBox x:Name="txtPrice" Width="90" Margin="6,0,14,0" />
+
+                    <Button Content="Найти" Click="FindTours_Click" Padding="12,4" />
+                </WrapPanel>
+
+                <WrapPanel Grid.Row="1" Margin="0,0,0,8">
+                    <StackPanel x:Name="panelToursEdit" Orientation="Horizontal">
+                        <Button Content="Добавить" Click="AddTour_Click" Padding="12,4" Margin="0,0,8,0" />
+                        <Button Content="Изменить" Click="EditTour_Click" Padding="12,4" Margin="0,0,8,0" />
+                        <Button Content="Удалить" Click="DeleteTour_Click" Padding="12,4" />
+                    </StackPanel>
+                    <Button x:Name="btnRequestTour" Content="Оформить заявку"
+                            Click="RequestTour_Click" Padding="12,4" Visibility="Collapsed" />
+                </WrapPanel>
+
+                <DataGrid Grid.Row="2" x:Name="dgTours" IsReadOnly="True"
+                          AutoGenerateColumns="False" HeadersVisibility="Column"
+                          CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Фото" Width="110">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding FotoPath}" Width="96" Height="60"
+                                           Stretch="UniformToFill" Margin="4" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Код" Binding="{Binding Код}" Width="50" />
+                        <DataGridTextColumn Header="Название" Binding="{Binding Название}" Width="*" />
+                        <DataGridTextColumn Header="Страна" Binding="{Binding Страна}" Width="100" />
+                        <DataGridTextColumn Header="Город" Binding="{Binding Город}" Width="100" />
+                        <DataGridTextColumn Header="Начало" Binding="{Binding Начало}" Width="90" />
+                        <DataGridTextColumn Header="Окончание" Binding="{Binding Окончание}" Width="90" />
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Стоимость}" Width="90" />
+                        <DataGridTextColumn Header="Мест" Binding="{Binding Мест}" Width="55" />
+                        <DataGridTextColumn Header="Свободно" Binding="{Binding Свободно}" Width="80" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+
+        <TabItem x:Name="tabClients" Header="Клиенты">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <WrapPanel Margin="0,0,0,8">
+                    <TextBlock Text="Поиск по фамилии или телефону:" VerticalAlignment="Center" />
+                    <TextBox x:Name="txtClientSearch" Width="240" Margin="6,0,14,0" />
+                    <Button Content="Найти" Click="FindClients_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Добавить" Click="AddClient_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Изменить" Click="EditClient_Click" Padding="12,4" />
+                </WrapPanel>
+
+                <DataGrid Grid.Row="1" x:Name="dgClients" IsReadOnly="True"
+                          AutoGenerateColumns="True" HeadersVisibility="Column"
+                          CanUserAddRows="False" />
+            </Grid>
+        </TabItem>
+
+        <TabItem x:Name="tabRequests" Header="Заявки">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <WrapPanel Margin="0,0,0,8">
+                    <TextBlock Text="Клиент:" VerticalAlignment="Center" />
+                    <ComboBox x:Name="cmbClient" Width="240" Margin="6,0,14,0" />
+
+                    <TextBlock Text="Тур:" VerticalAlignment="Center" />
+                    <ComboBox x:Name="cmbTour" Width="320" Margin="6,0,14,0" />
+
+                    <Button Content="Оформить заявку" Click="CreateRequest_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Обновить" Click="RefreshRequests_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Подтвердить" Click="ConfirmRequest_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Отменить" Click="CancelRequest_Click" Padding="12,4" />
+                </WrapPanel>
+
+                <DataGrid Grid.Row="1" x:Name="dgRequests" IsReadOnly="True"
+                          AutoGenerateColumns="True" HeadersVisibility="Column"
+                          CanUserAddRows="False" />
+            </Grid>
+        </TabItem>
+
+        <TabItem x:Name="tabMyRequests" Header="Мои заявки">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <WrapPanel Margin="0,0,0,8">
+                    <Button Content="Обновить" Click="RefreshMyRequests_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Оплатить" Click="PayMyRequest_Click" Padding="12,4" />
+                </WrapPanel>
+
+                <DataGrid Grid.Row="1" x:Name="dgMyRequests" IsReadOnly="True"
+                          AutoGenerateColumns="True" HeadersVisibility="Column"
+                          CanUserAddRows="False" />
+            </Grid>
+        </TabItem>
+
+        <TabItem x:Name="tabReports" Header="Отчёт">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <WrapPanel Margin="0,0,0,8">
+                    <TextBlock Text="Период с:" VerticalAlignment="Center" />
+                    <DatePicker x:Name="dpReportFrom" Width="130" Margin="6,0,14,0" />
+
+                    <TextBlock Text="по:" VerticalAlignment="Center" />
+                    <DatePicker x:Name="dpReportTo" Width="130" Margin="6,0,14,0" />
+
+                    <Button Content="Сформировать" Click="BuildReport_Click" Padding="12,4" />
+                </WrapPanel>
+
+                <DataGrid Grid.Row="1" x:Name="dgReport" IsReadOnly="True"
+                          AutoGenerateColumns="True" HeadersVisibility="Column"
+                          CanUserAddRows="False" />
+
+                <TextBlock Grid.Row="2" x:Name="tbTotal" Margin="0,8,0,0"
+                           FontWeight="SemiBold" HorizontalAlignment="Right" />
+            </Grid>
+        </TabItem>
+
+        <TabItem x:Name="tabEmployees" Header="Сотрудники">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <WrapPanel Margin="0,0,0,8">
+                    <Button Content="Добавить" Click="AddEmployee_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Изменить" Click="EditEmployee_Click" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Content="Обновить" Click="RefreshEmployees_Click" Padding="12,4" />
+                </WrapPanel>
+
+                <DataGrid Grid.Row="1" x:Name="dgEmployees" IsReadOnly="True"
+                          AutoGenerateColumns="True" HeadersVisibility="Column"
+                          CanUserAddRows="False" />
+            </Grid>
+        </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

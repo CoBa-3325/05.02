@@ -1,0 +1,35 @@
+<Window x:Class="TourAgency.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вход в систему" Height="300" Width="340"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="13">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Туристические агентства"
+                   FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"
+                   Margin="0,0,0,18" />
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock Text="Логин" />
+            <TextBox x:Name="txtLogin" Text="manager" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0,0,0,16">
+            <TextBlock Text="Пароль" />
+            <PasswordBox x:Name="txtPassword" />
+        </StackPanel>
+
+        <Button Grid.Row="3" Content="Войти" Height="32" Click="Enter_Click" IsDefault="True" />
+
+        <TextBlock Grid.Row="5" Text="Пароль: 12345" FontSize="11"
+                   Foreground="Gray" HorizontalAlignment="Center" />
+    </Grid>
+</Window>
