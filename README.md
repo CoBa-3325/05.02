@@ -10,12 +10,6 @@
 WPF-приложение для туристического агентства: туры, клиенты, заявки и отчёты.  
 Есть база данных MS SQL Server и небольшой HTTP API.
 
-<p align="center">
-  <img src="docs/github_qr.png" width="150" alt="QR-код репозитория">
-  <br>
-  <a href="https://github.com/CoBa-3325/05.02">github.com/CoBa-3325/05.02</a>
-</p>
-
 ## Что умеет
 
 - просмотр туров с фильтрами по стране, датам и цене;
@@ -99,25 +93,12 @@ dotnet run --project TourAgency.Api
 | POST | `/api/requests` | Создать заявку |
 | GET | `/api/requests/{id}/status` | Статус заявки |
 
-## Скриншоты
-
-<p align="center">
-  <img src="screens/s00_login.png" width="45%" alt="Вход">
-  <img src="screens/s01_tours.png" width="45%" alt="Туры">
-</p>
-<p align="center">
-  <img src="screens/s03_requests.png" width="45%" alt="Заявки">
-  <img src="screens/s04_report.png" width="45%" alt="Отчёт">
-</p>
-
 ## Структура
 
 ```text
 TourAgency/       — WPF-приложение
 TourAgency.Api/   — HTTP API
 db/               — SQL-скрипты
-screens/          — скриншоты
-docs/             — QR-код
 ```
 
 Проект выполнен в учебных целях.
